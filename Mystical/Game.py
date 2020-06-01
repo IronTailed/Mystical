@@ -2,13 +2,15 @@ import random
 from classespkg import *
 
 print('You are in a mysterious land. Survive.')
-name = input('*An old man approaches you*. In a gravelly voice he says: What is your name?')
-print ('Ah yes, your name is %s. I knew your father many years ago' % name)
+name = input('*An old man approaches you*. In a deep voice he asks: What is your name?')
+print ('''Ah yes, your name is %s. I knew your father many years ago.
+Good luck in your journey.
+        ''' % name)
 
 turn = 0
 proximity = ''
 possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6}
-    
+current_skill = 'Punch' #default current_skill is punch
 P1 = Player()
 
 #actions-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -35,33 +37,40 @@ def find():
     else:
         print('Proximity is not empty!')
 
-def attack(skill):
+def def_skill(skill):
+    '''This function sets a default skill to use.'''
+    global current_skill
+    if skill in P1.skills:
+        current_skill = skill
+    else:
+        print('Player does not have access to these skills. Player has access to %s' % P1.skills.keys())
+
+
+def attack():
     '''This function will let you attack an enemy in the proximity'''
     global proximity
     global P1
     if proximity == '':
         print('There\'s nothing to attack! proximity is empty!')
     else:
-        '''check if player has skill'''
-        if skill in P1.skills:
-            proximity.hp = proximity.hp - P1.skills[skill] #subtracts health here of the enemy
-            print('You hit %s for %s damage. Its health is %s.' % (proximity.name, P1.skills[skill], proximity.hp))
-            P1.hp = P1.hp - proximity.damage
-            print ('%s hit you for %s damage. Your Health is %s' % (proximity.name, proximity.damage, P1.hp)) #subtracts health of the player.
-            if P1.hp <= 0:
-                game_over()
+        if current_skill == 'TimeBend':
+            proximity.damage = proximity.damage - 2
+        proximity.hp = proximity.hp - P1.skills[current_skill] #subtracts health here of the enemy
+        print('You hit %s for %s damage. Its health is %s.' % (proximity.name, P1.skills[current_skill], proximity.hp))
+        P1.hp = P1.hp - proximity.damage
+        print ('%s hit you for %s damage. Your Health is %s' % (proximity.name, proximity.damage, P1.hp)) #subtracts health of the player.
+        if P1.hp <= 0:
+            game_over()
 
 
-            if proximity.hp <= 0:
-                print('You have killed the %s' % proximity.name)
-                print('You loot %s gold coins off the %s' % (proximity.loot, proximity.name))
-                P1.gold = P1.gold + proximity.loot
-                P1.level = P1.level + 1
-                print('You have leveled up. Your current level is %s' % P1.level)
-                print('The area is now clear.')
-                proximity = ''
-        else:
-            print('Player does not have this skill!')
+        if proximity.hp <= 0:
+            print('You have killed the %s' % proximity.name)
+            print('You loot %s gold coins off the %s' % (proximity.loot, proximity.name))
+            P1.gold = P1.gold + proximity.loot
+            P1.level = P1.level + 1
+            print('You have leveled up. Your current level is %s' % P1.level)
+            print('The area is now clear.')
+            proximity = ''
 
 def learn(skill):
     '''This function will let you learn a skill!'''
@@ -75,7 +84,7 @@ def learn(skill):
                 P1.skills.update({'Fireball':4})
                 print('You have learned the skill Fireball!')
             if skill == 'TimeBend' and P1.level >= 10:
-                P1.skills.update({'TimeShift' : 8})
+                P1.skills.update({'TimeBend' : 6})
                 print('You have learned the skill TimeBend!')
 
 def game_over():
@@ -89,9 +98,7 @@ def game_over():
 
 def heal():
     global P1
-    if P1.gold < 6:
-        print('You can\'t pay the healer! You don\'t have enough coins!')
-    elif P1.hp == P1.maxhp:
+    if P1.hp == P1.maxhp:
         print('You are at your max hp already!')
     else:
         price = 0.2 * P1.gold
@@ -101,6 +108,13 @@ def heal():
         r_heal_amt = round(heal_amt)
         if rprice == 0:
             print('You can\'t pay the healer! You don\'t have enough coins!')
+        elif P1.gold < 6:
+            tprice = 2
+            P1.gold -= tprice
+            P1.hp += r_heal_amt
+            if P1.hp > P1.maxhp:
+                P1.hp = P1.maxhp
+            print('You were healed by %s. Your current hp is %s. It costed %s gold.' % (r_heal_amt, P1.hp, tprice))        
         else:
             if x == 1:
                 tprice = rprice + 1
@@ -133,6 +147,12 @@ You will unlock new skills every couple levels. You may learn these skills using
 At level 5 you may learn Fireball and at 10 you may learn TimeBend. 
 
 You may view your information using status() 
+
+Skills: 
+Punch: The quick jab that Grandpa taught you.
+Fireball: The workhorse spell of wizards everywhere.
+TimeBend: By bending time you are able to both harm your enemy and reduce incoming damage by 1.
+
 ''')
 
 def status():
