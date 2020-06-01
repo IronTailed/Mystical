@@ -1,7 +1,7 @@
 import random
 from classespkg import *
 
-print('You are in a mysterious Dark Forest. Survive.')
+print('You are in a mysterious land. Survive.')
 name = input('*An old man approaches you*. In a gravelly voice he says: What is your name?')
 print ('Ah yes, your name is %s. I knew your father many years ago' % name)
 
@@ -56,8 +56,8 @@ def attack(skill):
                 print('You have killed the %s' % proximity.name)
                 print('You loot %s gold coins off the %s' % (proximity.loot, proximity.name))
                 P1.gold = P1.gold + proximity.loot
-                print('You have leveled up.')
                 P1.level = P1.level + 1
+                print('You have leveled up. Your current level is %s' % P1.level)
                 print('The area is now clear.')
                 proximity = ''
         else:
@@ -119,5 +119,40 @@ def heal():
 
                 print('You were healed by %s. Your current hp is %s. It costed %s gold.' % (r_heal_amt,P1.hp, tprice))
 
+def help():
+   print('''A text-based rpg. WIP
 
-    
+You are in a strange land. Try to survive.
+
+Use find() to find enemies, then attack(weapon) to attack them. e.g. attack(\'Punch\')
+
+Use heal() to heal in exchange for gold.
+
+You will unlock new skills every couple levels. You may learn these skills using learn() e.g. learn(\'Fireball\')
+
+At level 5 you may learn Fireball and at 10 you may learn TimeBend. 
+
+You may view your information using status() 
+''')
+
+def status():
+    global P1
+    print(''' 
+
+You know the skills: 
+%s
+
+You have %s gold.
+
+You have %s hp.
+
+Your maximum hp is %s.
+
+You have %s levels.
+
+You have %s defense.
+'''
+
+% (P1.skills.keys(), P1.gold, P1.hp, P1.maxhp, P1.level, P1.defense))
+
+
