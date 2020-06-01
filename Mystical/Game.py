@@ -1,56 +1,16 @@
 import random
+from classespkg import *
 
-def play():
-    print('You are in a mysterious Dark Forest. Survive.')
-
-name = input('What is your name?')
-print ('Ah yes, your name is %s' % name)
+print('You are in a mysterious Dark Forest. Survive.')
+name = input('*An old man approaches you*. In a gravelly voice he says: What is your name?')
+print ('Ah yes, your name is %s. I knew your father many years ago' % name)
 
 turn = 0
 proximity = ''
 possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6}
-
-
-class Player:
-    def __init__(self):
-        #using self.skills to store skills as well as attack values in a dictionary 
-        self.skills = {'Punch':2}
-        self.gold = 10
-        self.hp = 10
-        self.level = 1
-        self.defense = 0
-        self.maxhp = self.hp + self.level - 1
     
 P1 = Player()
 
-#enemy classes-------------------------------------------------------------------------------------------------------------------------------------------------------------
-class Bandit:
-    def __init__(self):
-        self.name = 'Bandit'
-        self.damage = 2
-        self.hp = 4
-        self.loot = random.randint(1,3)
-
-class Drunk:
-    def __init__(self):
-        self.name = 'Drunk'
-        self.damage = 1
-        self.hp = 5
-        self.loot = random.randint(1,3)
-
-class Troll: 
-    def __init__(self):
-        self.name = 'Troll'
-        self.damage = 4
-        self.hp = 8
-        self.loot = random.randint(2,4)
-
-class Lich:
-    def __init__(self):
-        self.name = 'Lich'
-        self.damage = 6
-        self.hp = 2
-        self.loot = random.randint(3,4)
 #actions-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
