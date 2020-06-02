@@ -37,7 +37,7 @@ class Wyvern:
     def __init__(self):
         self.name = 'Wyvern'
         self.damage = random.randint(8,11)
-        self.hp = 20
+        self.hp = 35
         self.loot = random.randint(6,9)
         self.is_boss = False
 
@@ -45,7 +45,7 @@ class Chimera:
     def __init__(self):
         self.name = 'Chimera'
         self.damage = random.randint(3,5)
-        self.hp = 24
+        self.hp = 70
         self.loot = random.randint(6,9)
         self.is_boss = False
 
@@ -54,25 +54,31 @@ class Boss_1:
     def __init__(self):
         self.name = 'Mydrias, the Deceiver'
         self.damage = random.randint(10,17)
-        self.hp = 90
+        self.hp = 100
         self.loot = 25
         self.is_boss = True
 
 class Shapeshifter:
     def __init__(self):
         self.name = 'Shapeshifter'
-        self.damage = random.randint(9,13)
-        self.hp = 60
+        self.damage = random.randint(13,15)
+        self.hp = 80
         self.loot = random.randint(10,13)
         self.is_boss = False
 
 class Sprite:
     def __init__(self):
         self.name = 'Sprite'
-        self.damage = random.randint(13,15)
-        self.hp = 30
+        self.damage = random.randint(15,17)
+        self.hp = 45
         self.loot = random.randint(10,13)
         self.is_boss = False
 
-
+class Boss_2:
+    def __init__(self):
+        self.name = 'Ilvisar, the Unbroken'
+        self.damage = random.randint(20,25)
+        self.hp = 200
+        self.loot = 40
+        self.is_boss = True
 
