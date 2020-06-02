@@ -68,6 +68,7 @@ def attack():
             print('You loot %s gold coins off the %s' % (proximity.loot, proximity.name))
             P1.gold = P1.gold + proximity.loot
             P1.level = P1.level + 1
+            P1.maxhp = P1.maxhp + 1  
             print('You have leveled up. Your current level is %s' % P1.level)
             print('The area is now clear.')
             proximity = ''
@@ -138,7 +139,7 @@ def help():
 
 You are in a strange land. Try to survive.
 
-Use find() to find enemies, then attack(weapon) to attack them. e.g. attack(\'Punch\')
+Use find() to find enemies, then attack(weapon) to attack them using your current_skill.
 
 Use heal() to heal in exchange for gold.
 
@@ -146,12 +147,14 @@ You will unlock new skills every couple levels. You may learn these skills using
 
 At level 5 you may learn Fireball and at 10 you may learn TimeBend. 
 
+Set your current skill via def_skill(skill). Defaults to Punch. 
+
 You may view your information using status() 
 
 Skills: 
-Punch: The quick jab that Grandpa taught you.
-Fireball: The workhorse spell of wizards everywhere.
-TimeBend: By bending time you are able to both harm your enemy and reduce incoming damage by 1.
+Punch[2]: The quick jab that Grandpa taught you.
+Fireball[4]: The workhorse spell of wizards everywhere.
+TimeBend[6]: By bending time you are able to both harm your enemy and reduce incoming damage by 1.
 
 ''')
 
@@ -161,6 +164,8 @@ def status():
 
 You know the skills: 
 %s
+
+Your current skill is : %s
 
 You have %s gold.
 
@@ -173,6 +178,6 @@ You have %s levels.
 You have %s defense.
 '''
 
-% (P1.skills.keys(), P1.gold, P1.hp, P1.maxhp, P1.level, P1.defense))
+% (P1.skills.keys(), current_skill, P1.gold, P1.hp, P1.maxhp, P1.level, P1.defense))
 
 
