@@ -61,7 +61,7 @@ Towards the inevitable....
             print('''
 Before you, flickering in and out of existence,
 stands a wind spirit - Ilvisar, the Unbroken.
-It smirks.
+It smirks. You wonder:
 How many mortals had those hands killed?
             
             ''')
@@ -86,10 +86,12 @@ def attack():
     global proximity
     global P1
     if proximity == '':
-        print('There\'s nothing to attack! proximity is empty!')
+        print('There\'s nothing to attack! Your proximity is empty!')
     else:
         if current_skill == 'TimeBend':
             proximity.damage = proximity.damage - 1
+            if proximity.damage <= 0:
+                proximity.damage = 0
         elif current_skill == 'Hex':
             proximity.hp = round(proximity.hp * 0.6)
         proximity.hp = proximity.hp - P1.skills[current_skill] #subtracts health here of the enemy
@@ -234,7 +236,8 @@ You may beg using \'beg\' or \'b\' when you are not in combat. Beware! Not all a
 Skills: 
 Punch[2]: The quick jab that Grandpa taught you.
 Fireball[4]: The workhorse spell of wizards everywhere.
-TimeBend[6]: By bending time you are able to both harm your enemy and reduce incoming damage by 1.
+TimeBend[6]: By bending time you are able to both harm your enemy and reduce incoming damage by 1 each time you cast TimeBend.
+Hex[10] : You cast a vile hex on the enemy that reduces their health, then damages them for 10 hp.
 
 ''')
 

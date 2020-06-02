@@ -1,4 +1,5 @@
-import random 
+import random
+
 
 #enemy classes-------------------------------------------------------------------------------------------------------------------------------------------------------------
 class Bandit:
@@ -20,7 +21,7 @@ class Drunk:
 class Troll: 
     def __init__(self):
         self.name = 'Troll'
-        self.damage = random.randint(3,5)
+        self.damage = random.randint(3,4)
         self.hp = 8
         self.loot = random.randint(3,6)
         self.is_boss = False
@@ -28,7 +29,7 @@ class Troll:
 class Lich:
     def __init__(self):
         self.name = 'Lich'
-        self.damage = random.randint(4,6)
+        self.damage = random.randint(3,5)
         self.hp = 4
         self.loot = random.randint(3,7)
         self.is_boss = False
@@ -36,7 +37,7 @@ class Lich:
 class Wyvern:
     def __init__(self):
         self.name = 'Wyvern'
-        self.damage = random.randint(8,11)
+        self.damage = random.randint(8,10)
         self.hp = 35
         self.loot = random.randint(6,9)
         self.is_boss = False
@@ -44,7 +45,7 @@ class Wyvern:
 class Chimera:
     def __init__(self):
         self.name = 'Chimera'
-        self.damage = random.randint(3,5)
+        self.damage = random.randint(5,7)
         self.hp = 70
         self.loot = random.randint(6,9)
         self.is_boss = False
