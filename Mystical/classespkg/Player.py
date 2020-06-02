@@ -1,6 +1,7 @@
 class Player:
     def __init__(self):
-        #using self.skills to store skills as well as attack values in a dictionary 
+        #using self.skills to store skills as well as attack values in a dictionary
+        self.name = ''
         self.skills = {'Punch':2}
         self.gold = 10
         self.hp = 10
