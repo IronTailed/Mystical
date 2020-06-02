@@ -3,7 +3,7 @@ from classespkg import *
 
 P1 = Player()
 proximity = ''
-possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6}
+possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6, 'Hex':10}
 current_skill = 'Punch' #default current_skill is punch
 upgrade_count = 0
 
@@ -35,12 +35,18 @@ def find():
                 proximity = Wyvern()
         elif P1. level == 35:
             proximity = Boss_1()
-        elif P1. level >= 36:
+        elif P1. level < 50:
             x = random.choice([True,False])
             if x:
                 proximity = Shapeshifter()
             else:
                 proximity = Sprite()
+        elif P1.level == 50:
+            proximity = Boss_2()
+        elif P1.level > 50:
+            print('That\'s all for now! Congrats on beating the current version of the game!')
+            status()
+            game_over()
 
         if proximity.is_boss == False:
             print('You find a %s. They look angry.' % proximity.name)
@@ -51,6 +57,14 @@ You have only heard of this dragon in legends.
 You quake with fear as Mydrias draws closer...
 Towards the inevitable....
 ''')
+        elif proximity.name == 'Ilvisar, the Unbroken':
+            print('''
+Before you, flickering in and out of existence,
+stands a wind spirit - Ilvisar, the Unbroken.
+It smirks.
+How many mortals had those hands killed?
+            
+            ''')
     else:
         print('Proximity is not empty! There is a %s!' % proximity.name)
 
@@ -76,6 +90,8 @@ def attack():
     else:
         if current_skill == 'TimeBend':
             proximity.damage = proximity.damage - 1
+        elif current_skill == 'Hex':
+            proximity.hp = round(proximity.hp * 0.6)
         proximity.hp = proximity.hp - P1.skills[current_skill] #subtracts health here of the enemy
         print('You hit %s for %s damage. Its health is %s.' % (proximity.name, P1.skills[current_skill], proximity.hp))
         P1.hp = P1.hp - proximity.damage
@@ -94,6 +110,7 @@ def attack():
             print('The area is now clear.')
             proximity = ''
 
+
 def learn():
     '''This function will let you learn a skill!'''
     global P1
@@ -105,9 +122,12 @@ def learn():
             if skill == 'Fireball' and P1.level >= 5:
                 P1.skills.update({'Fireball':4})
                 print('You have learned the skill Fireball!')
-            elif skill == 'TimeBend' and P1.level >= 10:
+            elif skill == 'TimeBend' and P1.level >= 20:
                 P1.skills.update({'TimeBend' : 6})
                 print('You have learned the skill TimeBend!')
+            elif skill == 'Hex' and P1.level > 35:
+                P1.skills.update({'Hex' : 10})
+                print('You have learned the skill Hex!')
             else: 
                 print('You are not high enough level to learn this skill!')
 
@@ -181,7 +201,7 @@ def upgrade():
         upgrade_count += 1
     elif a in ['N', 'No']:
         print('The mage says: \' Come back another time!\' ')
-    elif P1.gold <= upgrade_cost:
+    elif P1.gold < upgrade_cost:
         print('''The mage shakes his head.
         Gruffly, he barks: \"This stuff isn\'t free, you know.\"
         ''')
@@ -197,7 +217,7 @@ Use \'heal\' or \'h\'  to heal in exchange for gold.
 
 You will unlock new skills every couple levels. You may learn these skills using \'learn\' or \'l\'
 
-At level 5 you may learn Fireball and at 10 you may learn TimeBend. 
+At level 5 you may learn Fireball, at 15 TimeBend, and at 36 Hex. 
 
 Set your current skill via \'default skill\' or \'ds\'. Defaults to Punch. 
 
@@ -275,8 +295,12 @@ There is a %s in the proximity!
 ''' % proximity.name)
 
 
-
-
+'''def level():
+    #used for testing
+    global P1
+    x = input('To what level do you want to go to?')
+    P1.level =  int(x)
+'''
 
 def main():
     global P1
@@ -315,6 +339,8 @@ Good luck on your journey. Type \'help\' for help.
             upgrade()
         elif z in ['beg', 'b']:
             beg()
+        '''elif z in ['level', 'lvl']:
+            level()'''
 
 
 
