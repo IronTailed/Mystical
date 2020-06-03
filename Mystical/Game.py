@@ -192,7 +192,7 @@ def upgrade():
     global upgrade_count
     upgrade_cost = 3 + 4 * upgrade_count
     a = input('The master mage says: Would you like to upgrade your current default skill, %s? This will cost %s. Type \'Y\' or \'N\' . ' % (current_skill,upgrade_cost))
-    if a in  ['Y','Yes'] and P1.gold > upgrade_cost:
+    if a in  ['Y','Yes'] and P1.gold >= upgrade_cost:
         P1.skills[current_skill] = round(P1.skills[current_skill] * 1.5)
         print('''The mage chants. 
         You see energy running through your body. 
