@@ -48,8 +48,10 @@ def find():
             status()
             game_over()
 
-        if proximity.is_boss == False:
+        if proximity.is_boss == False and proximity.sentient == True:
             print('You find a %s. They look angry.' % proximity.name)
+        elif proximity.is_boss == False and proximity.sentient == False:
+            print('You find a %s. They quickly draw closer to attack you.' % proximity.name)
         elif proximity.name == 'Mydrias, the Deceiver':
             print('''
 Mydrias the Deceiver looks down at you from its perch on the mountain.
@@ -98,8 +100,7 @@ def attack():
         print('You hit %s for %s damage. Its health is %s.' % (proximity.name, P1.skills[current_skill], proximity.hp))
         P1.hp = P1.hp - proximity.damage
         print ('%s hit you for %s damage. Your Health is %s' % (proximity.name, proximity.damage, P1.hp)) #subtracts health of the player.
-        if P1.hp <= 0:
-            game_over()
+    
 
 
         if proximity.hp <= 0:
@@ -233,6 +234,8 @@ You may access this help screen again using \'help\' or \'i\'.
 
 You may beg using \'beg\' or \'b\' when you are not in combat. Beware! Not all are charitable...
 
+You may attempt a negotiation using \'negotiate\' or \'n\' when you are in combat. 
+
 Skills: 
 Punch[2]: The quick jab that Grandpa taught you.
 Fireball[4]: The workhorse spell of wizards everywhere.
@@ -288,8 +291,6 @@ Some meanie beat you up!
 You lost %s hp! Your hp is %s 
     
     ''' % (beat_amt, P1.hp))
-            if P1.hp <= 0:
-                game_over()
     else: 
         print('''
 The proximity is not empty! 
@@ -304,6 +305,70 @@ There is a %s in the proximity!
     x = input('To what level do you want to go to?')
     P1.level =  int(x)
 '''
+
+def negotiate():
+    global proximity
+    global P1
+    if proximity == '':
+        print('Proximity is empty!')
+    else:
+        if proximity.is_boss == True:
+            print('You cannot negotiate with %s!' % proximity.name)
+        elif proximity.sentient == False:
+            print('%s is not sentient! Your attempts at negotiation fail!' % proximity.name)
+            P1.hp -= proximity.damage
+            print('%s hits you for %s damage! Your health is %s' % (proximity.name, proximity.damage, P1.hp))
+        elif proximity.sentient == True:
+            needed_bribe = round(0.5 * proximity.loot)
+            x = input('''Would you like to offer a bribe in your negotiation? 
+Please enter \'Y\' or \'N\'.''')
+
+            if x in ['Y', 'Yes']:
+                bribe_amt  = input ('''Please enter the amount of the bribe. ''')
+                y = int(bribe_amt)
+                if y <= 0:
+                    print('You can\'t do that!')
+                else:
+                    if P1.gold < y:
+                        print('You do not have enough gold!')
+                    elif y < needed_bribe:
+                        a = random.choice([True,False])
+                        if a:
+                            print('Bribe successful! You have made the %s go away!' % proximity.name)
+                            proximity = ''
+                            print('You used %s gold for the bribe.' % y)
+                            P1.gold -= y
+                            P1.level += 1
+                            print('You levelled up! Your current level is: %s' % P1.level)
+                        else:
+                            print('Bribe unsuccessful!')
+                        P1.gold -= y
+                    elif y >= needed_bribe:
+                        print('Bribe successful! You have made the %s go away!' % proximity.name)
+                        proximity = ''
+                        print('You used %s gold for the bribe.' % y)
+                        P1.gold -= y
+                        P1.level += 1
+                        print('You levelled up! Your current level is: %s' % P1.level)
+            elif x in ['N', 'No']: 
+                print('You choose to negotiate with the %s, sans bribe.' % proximity.name) 
+                print('')
+                a = random.choice([True,False])
+                if a:
+                    print('Negotiation successful! You have made the %s go away!' % proximity.name)
+                    proximity = ''
+                    P1.level += 1
+                    print('You levelled up! Your current level is: %s' % P1.level)
+                else:
+                    print('Negotiation unsuccessful!')
+                    P1.hp -= proximity.damage
+                    print('%s hits you for %s damage! Your health is %s.' % (proximity.name, proximity.damage, P1.hp))
+            else: 
+                print('That was not a valid input! Try again.')
+
+
+
+
 
 def main():
     global P1
@@ -320,6 +385,8 @@ Good luck on your journey. Type \'help\' for help.
 
 
     while True:
+        if P1.hp<=0:
+            game_over()
         z = input()
         z = z.lower()
         if z in ['spawn', 'find','hunt','f']:
@@ -342,6 +409,9 @@ Good luck on your journey. Type \'help\' for help.
             upgrade()
         elif z in ['beg', 'b']:
             beg()
+        elif z in ['negotiate', 'n']:
+            negotiate()
+
         '''elif z in ['level', 'lvl']:
             level()'''
 
