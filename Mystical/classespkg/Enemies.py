@@ -9,6 +9,7 @@ class Bandit:
         self.hp = 4
         self.loot = random.randint(2,3)
         self.is_boss = False
+        self.sentient = True
 
 class Drunk:
     def __init__(self):
@@ -17,6 +18,7 @@ class Drunk:
         self.hp = 4
         self.loot = random.randint(2,3)
         self.is_boss = False
+        self.sentient = False
 #lvl 5
 class Troll: 
     def __init__(self):
@@ -25,6 +27,7 @@ class Troll:
         self.hp = 8
         self.loot = random.randint(3,6)
         self.is_boss = False
+        self.sentient = True
 
 class Lich:
     def __init__(self):
@@ -33,6 +36,7 @@ class Lich:
         self.hp = 4
         self.loot = random.randint(3,7)
         self.is_boss = False
+        self.sentient = False
 #lvl 20
 class Wyvern:
     def __init__(self):
@@ -41,6 +45,7 @@ class Wyvern:
         self.hp = 27
         self.loot = random.randint(6,9)
         self.is_boss = False
+        self.sentient = False
 
 class Chimera:
     def __init__(self):
@@ -49,6 +54,7 @@ class Chimera:
         self.hp = 70
         self.loot = random.randint(6,9)
         self.is_boss = False
+        self.sentient = False
 
 #lvl 35
 class Boss_1:
@@ -58,6 +64,7 @@ class Boss_1:
         self.hp = 100
         self.loot = 25
         self.is_boss = True
+        self.sentient = False
 #lvl 36
 class Shapeshifter:
     def __init__(self):
@@ -66,6 +73,7 @@ class Shapeshifter:
         self.hp = 80
         self.loot = random.randint(10,13)
         self.is_boss = False
+        self.sentient = True
 
 class Sprite:
     def __init__(self):
@@ -74,6 +82,7 @@ class Sprite:
         self.hp = 45
         self.loot = random.randint(10,13)
         self.is_boss = False
+        self.sentient = True
 #lvl 50
 class Boss_2:
     def __init__(self):
@@ -82,4 +91,5 @@ class Boss_2:
         self.hp = 150
         self.loot = 40
         self.is_boss = True
+        self.sentient = False
 
