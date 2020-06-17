@@ -2,16 +2,17 @@ import random
 from classespkg import *
 
 P1 = Player()
+'''The Player class'''
 proximity = ''
-possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6, 'Hex':10}
-current_skill = 'Punch' #default current_skill is punch
+possible_skills = {'punch':2, 'fireball':4, 'timebend': 6, 'hex':10}
+current_skill = 'punch' #default current_skill is punch
 upgrade_count = 0
 
 #actions-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def find():
-    '''This function will spawn an ememy'''
+    '''This function will spawn an ememy. Spanws by level groups: 0-5, 5-20, 20-35, 35-50'''
     global proximity
     if proximity == '':
 
@@ -74,6 +75,7 @@ def def_skill():
     '''This function sets a default skill to use.'''
     global current_skill
     skill = input('What skill would you like to set as your default?')
+    skill = skill.lower()
     if skill in P1.skills and skill != current_skill:
         print('Your default skill has been changed from %s to %s.' % (current_skill, skill))
         current_skill = skill
@@ -87,15 +89,17 @@ def attack():
     '''This function will let you attack an enemy in the proximity'''
     global proximity
     global P1
+    global current_skill
     if proximity == '':
         print('There\'s nothing to attack! Your proximity is empty!')
     else:
-        if current_skill == 'TimeBend':
+        current_skill = current_skill.lower()
+        if current_skill == 'timebend':
             proximity.damage = proximity.damage - 1
             if proximity.damage <= 0:
                 proximity.damage = 0
-        elif current_skill == 'Hex':
-            proximity.hp = proximity.hp * 0.5
+        elif current_skill == 'hex':
+            proximity.hp = round(proximity.hp * 0.5)
         proximity.hp = proximity.hp - P1.skills[current_skill] #subtracts health here of the enemy
         print('You hit %s for %s damage. Its health is %s.' % (proximity.name, P1.skills[current_skill], proximity.hp))
         P1.hp = P1.hp - proximity.damage
@@ -118,23 +122,25 @@ def learn():
     '''This function will let you learn a skill!'''
     global P1
     skill = input('What skill would you like to learn?')
+    skill = skill.lower()
     if skill not in possible_skills:
         print('This skill is unknown even to the great sages of the land.')
     else:
         if skill in possible_skills:
-            if skill == 'Fireball' and P1.level >= 5:
-                P1.skills.update({'Fireball':4})
+            if skill == 'fireball' and P1.level >= 5:
+                P1.skills.update({'fireball':4})
                 print('You have learned the skill Fireball!')
-            elif skill == 'TimeBend' and P1.level >= 15:
-                P1.skills.update({'TimeBend' : 6})
+            elif skill == 'timebend' and P1.level >= 15:
+                P1.skills.update({'timebend' : 6})
                 print('You have learned the skill TimeBend!')
-            elif skill == 'Hex' and P1.level > 35:
-                P1.skills.update({'Hex' : 10})
+            elif skill == 'hex' and P1.level > 35:
+                P1.skills.update({'hex' : 10})
                 print('You have learned the skill Hex!')
             else: 
                 print('You are not high enough level to learn this skill!')
 
 def game_over():
+    '''Internal function to end the game in case of player death'''
     global P1
     print('You have died. You were level %s' % P1.level)
     print('You had learned the following skills:')
@@ -143,14 +149,17 @@ def game_over():
     quit()
 
 def exit():
+    '''Quits the game'''
     x = input('Would you like to quit? Type \'Y\' or \'N\' ')
-    if x == 'Y' or x == 'Yes':
+    x = x.lower()
+    if x == 'y' or x == 'yes':
         game_over()
     else: 
         print('Whew!')
 
 
 def heal():
+    '''Heals the player for a price'''
     global P1
     if P1.hp == P1.maxhp:
         print('You are at your max hp already!')
@@ -188,12 +197,14 @@ def heal():
                 print('You were healed by %s. Your current hp is %s. It costed %s gold.' % (r_heal_amt,P1.hp, tprice))
 
 def upgrade():
+    '''upgrades skill'''
     global current_skill
     global P1
     global upgrade_count
     upgrade_cost = 3 + 4 * upgrade_count
     a = input('The master mage says: Would you like to upgrade your current default skill, %s? This will cost %s. Type \'Y\' or \'N\' . ' % (current_skill,upgrade_cost))
-    if a in  ['Y','Yes'] and P1.gold >= upgrade_cost:
+    a = a.lower()
+    if a in  ['y','yes'] and P1.gold >= upgrade_cost:
         P1.skills[current_skill] = round(P1.skills[current_skill] * 1.5)
         print('''The mage chants. 
         You see energy running through your body. 
@@ -202,7 +213,7 @@ def upgrade():
         Congratulations!''' % (current_skill, P1.skills[current_skill]))
         P1.gold = P1.gold - upgrade_cost
         upgrade_count += 1
-    elif a in ['N', 'No']:
+    elif a in ['n', 'no']:
         print('The mage says: \' Come back another time!\' ')
     elif P1.gold < upgrade_cost:
         print('''The mage shakes his head.
@@ -210,7 +221,8 @@ def upgrade():
         ''')
 
 def help():
-   print('''A text-based rpg. WIP
+    '''help function'''
+    print('''A text-based rpg. WIP
 
 You are in a strange land. Try to survive.
 
@@ -245,6 +257,7 @@ Hex[10] : You cast a vile hex on the enemy that reduces their health, then damag
 ''')
 
 def status():
+    '''this function returns player info'''
     global P1
     print(''' 
 
@@ -270,6 +283,7 @@ You have %s defense.
 
 
 def beg():
+    '''This function allows the player to beg for gold'''
     global P1
     global proximity
     b = random.randint(1,2)
@@ -307,6 +321,7 @@ There is a %s in the proximity!
 '''
 
 def negotiate():
+    '''This function allows the player to negotiate with enemies'''
     global proximity
     global P1
     if proximity == '':
@@ -376,7 +391,7 @@ def main():
     proximity = ''
     possible_skills = {'Punch':2, 'Fireball':4, 'TimeBend': 6}
     current_skill = 'Punch' #default current_skill is punch
-    print('You are in a mysterious land. Survive.')
+    print('You are in a mysterious land. The enemies seem to keep on coming. Survive.')
     name = input('*An old man approaches you*. In a deep voice he asks: What is your name?')
     print ('''Ah yes, your name is %s. I knew your father many years ago.
 Good luck on your journey. Type \'help\' for help.
@@ -412,10 +427,8 @@ Good luck on your journey. Type \'help\' for help.
         elif z in ['negotiate', 'n']:
             negotiate()
 
-        '''elif z in ['level', 'lvl']:
-            level()'''
-
-
+        else:
+            print('I don\'t understand your command! Type \'help\' for info!')
 
 
 
