@@ -1,13 +1,23 @@
 import random
 
-
 #enemy classes-------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Stag:
+    def __init__(self):
+        self.name = 'Stag'
+        self.damage = 1
+        self.hp = 1
+        self.loot = 1
+        self.xp = 1
+        self.is_boss = False
+        self.sentient = False
+
 class Bandit:
     def __init__(self):
         self.name = 'Bandit'
         self.damage = random.randint(1,2)
         self.hp = 4
         self.loot = random.randint(2,3)
+        self.xp = 2
         self.is_boss = False
         self.sentient = True
 
@@ -17,6 +27,7 @@ class Drunk:
         self.damage = random.randint(1,2)
         self.hp = 4
         self.loot = random.randint(2,3)
+        self.xp = 2
         self.is_boss = False
         self.sentient = False
 #lvl 5
@@ -26,6 +37,7 @@ class Troll:
         self.damage = random.randint(3,4)
         self.hp = 8
         self.loot = random.randint(3,6)
+        self.xp = 15
         self.is_boss = False
         self.sentient = True
 
@@ -35,6 +47,7 @@ class Lich:
         self.damage = random.randint(3,5)
         self.hp = 4
         self.loot = random.randint(3,7)
+        self.xp = 15
         self.is_boss = False
         self.sentient = False
 #lvl 20
@@ -44,6 +57,7 @@ class Wyvern:
         self.damage = random.randint(4,7)
         self.hp = 27
         self.loot = random.randint(6,9)
+        self.xp = 50
         self.is_boss = False
         self.sentient = False
 
@@ -53,6 +67,7 @@ class Chimera:
         self.damage = random.randint(3,5)
         self.hp = 70
         self.loot = random.randint(6,9)
+        self.xp = 50
         self.is_boss = False
         self.sentient = False
 
@@ -63,6 +78,7 @@ class Boss_1:
         self.damage = random.randint(10,17)
         self.hp = 100
         self.loot = 25
+        self.xp = 150
         self.is_boss = True
         self.sentient = False
 #lvl 36
@@ -72,6 +88,7 @@ class Shapeshifter:
         self.damage = random.randint(6,8)
         self.hp = 80
         self.loot = random.randint(10,13)
+        self.xp = 350
         self.is_boss = False
         self.sentient = True
 
@@ -81,6 +98,7 @@ class Sprite:
         self.damage = random.randint(15,16)
         self.hp = 45
         self.loot = random.randint(10,13)
+        self.xp = 350
         self.is_boss = False
         self.sentient = True
 #lvl 50
@@ -90,6 +108,7 @@ class Boss_2:
         self.damage = random.randint(16,18)
         self.hp = 150
         self.loot = 40
+        self.xp = 600
         self.is_boss = True
         self.sentient = False
 
